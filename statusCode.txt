@@ -1,0 +1,25 @@
+// ================= HTTP STATUS CODE LIST =================
+//
+// 200 OK                    -> Request berhasil (GET, PUT, PATCH)
+// 201 Created               -> Data berhasil dibuat (POST)
+// 202 Accepted              -> Request diterima, diproses async
+// 204 No Content            -> Berhasil tanpa response body
+//
+// 301 Moved Permanently     -> Redirect permanen
+// 302 Found                 -> Redirect sementara
+// 304 Not Modified          -> Cache masih valid
+//
+// 400 Bad Request           -> Request tidak valid / format salah
+// 401 Unauthorized          -> Belum login / token invalid
+// 403 Forbidden             -> Tidak punya akses (role/permission)
+// 404 Not Found             -> Data / endpoint tidak ditemukan
+// 409 Conflict              -> Data bentrok (duplikat)
+// 422 Unprocessable Entity  -> Validasi gagal
+// 429 Too Many Requests     -> Terkena rate limit
+//
+// 500 Internal Server Error -> Error di server
+// 502 Bad Gateway           -> Server upstream bermasalah
+// 503 Service Unavailable   -> Server down / maintenance
+// 504 Gateway Timeout       -> Server timeout
+//
+// ================================================================

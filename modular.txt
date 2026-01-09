@@ -1,0 +1,33 @@
+src
+|-- modules
+|   |-- auth
+|   |   |-- auth.controller.js
+|   |   |-- auth.service.js
+|   |   |-- auth.routes.js
+|   |   |-- auth.repository.js
+|   |   |-- auth.swagger.js
+|   |-- user
+|   |   |-- user.controller.js
+|   |   |-- user.service.js
+|   |   |-- user.routes.js
+|   |   |-- user.repository.js
+|   |   |-- user.swagger.js
+|   |-- ... (module lain)
+|
+|-- shared
+|   |-- middlewares
+|   |   |-- error.middleware.js
+|   |   |-- auth.middleware.js
+|   |-- utils
+|   |   |-- response.js
+|   |   |-- catchAsync.js
+|   |-- errors
+|       |-- app-error.js
+|
+|-- config
+|   |-- db.js
+|   |-- env.js
+|   |-- swagger.js
+|
+|-- app.js
+|-- server.js
