@@ -1,17 +1,30 @@
-// src/middleware/error.middleware.js
+import { Request, Response, NextFunction } from "express";
 import { sendError } from "#shared/utils/response";
 import env from "../env.js";
 
-const globalErrorHandler = (err, req, res, next) => {
+interface ExtendedError extends Error {
+  statusCode?: number;
+  path?: string | null;
+  method?: string;
+  ip?: string | null;
+}
+
+const globalErrorHandler = (
+  err: ExtendedError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
   err.path = req.path || null;
   err.method = req.method || "*";
   err.ip = req.ip || null;
 
-  console.log(env.NODE_ENV)
+  console.log(env.NODE_ENV);
 
-  if(env.NODE_ENV === "development") console.error("ERROR COMING UP: FROM", err);
+  if (env.NODE_ENV === "development")
+    console.error("ERROR COMING UP: FROM", err);
 
   sendError(
     res,

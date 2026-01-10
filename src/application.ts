@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-import mainRouter from "./routes.js"
-import corsMiddleware from "#middlewares/cors.middleware";
-import notFound from "#middlewares/notFound.middleware";
-import globalErrorHandler from "./middlewares/error.middleware.js";
-import { setupSwagger } from "#config/swagger";
+import mainRouter from "./routes"
+import globalErrorHandler from "./middlewares/error.middleware";
+import { setupSwagger } from "./config/swagger";
+import corsMiddleware from "./middlewares/cors.middleware";
+import notFound from "./middlewares/notFound.middleware";
 
 dotenv.config();
 

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import UserRepo from "#user/user.repository";
 import ExptectedError from "#shared/errors/errorHandler";
 
-export const register = async (payload) => {
+export const register = async (payload: any) => {
   const exist = await UserRepo.getByUsername(payload.username);
   if (exist) throw new ExptectedError("user already exist", 409);
 
@@ -19,7 +19,7 @@ export const register = async (payload) => {
   return user;
 };
 
-export const login = async (username, password) => {
+export const login = async (username: string, password: string) => {
   const user = await UserRepo.getByUsername(username);
   if (!user) throw new ExptectedError("failed to create", 500);
 
