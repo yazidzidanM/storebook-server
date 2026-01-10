@@ -1,4 +1,3 @@
-import { users } from "#modules/user/user.schema";
 import { eq } from "drizzle-orm";
 import { db } from "src/database/drizzle";
 import { refreshTokens } from "./auth.schema";

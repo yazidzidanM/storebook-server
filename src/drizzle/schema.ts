@@ -5,6 +5,7 @@ export const books = mysqlTable("books", {
 	id: int().autoincrement().notNull(),
 	categoryId: int("category_id").references(() => categories.id, { onDelete: "set null", onUpdate: "cascade" } ),
 	title: varchar({ length: 255 }).notNull(),
+	author: varchar({ length: 255 }).notNull(),
 	description: text().notNull(),
 	price: decimal({ precision: 10, scale: 2 }).notNull(),
 	stock: int().default(0).notNull(),
@@ -27,6 +28,7 @@ export const cartItems = mysqlTable("cart_items", {
 export const categories = mysqlTable("categories", {
 	id: int().autoincrement().notNull(),
 	name: varchar({ length: 100 }).notNull(),
+	description: text().notNull(),
 });
 
 export const messages = mysqlTable("messages", {

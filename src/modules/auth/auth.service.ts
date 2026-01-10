@@ -119,8 +119,6 @@ class AuthServices {
     const existingToken = await this.authRepo.findTokensByUserUuid(decoded.uuid);
     if (!existingToken) throw new ExptectedError("User not found", 404);
 
-    console.log(existingToken)
-
     await this.authRepo.revokeTokenByUserUuid(decoded.uuid);
     
     return;

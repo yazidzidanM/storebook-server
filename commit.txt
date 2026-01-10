@@ -43,7 +43,7 @@ Jenis-jenis Commit
 
     revert: Mengembalikan perubahan yang telah dilakukan sebelumnya
 
-    Contoh: revert(feat(auth): membatalkan fitur login dengan OAuth
+    Contoh: revert(feat(auth): membatalkan fitur login dengan OAuth)
 
 Format Pesan Commit
 jenis(scope): deskripsi

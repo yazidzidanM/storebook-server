@@ -53,6 +53,7 @@ export const logout = catchAsync(
 export const refreshToken = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await AuthService.refreshSession(req.cookies.refreshToken);
+    console.log(req.cookies.refreshToken)
     sendResponse(res, result, "access token generated successfully", 200);
   }
 );

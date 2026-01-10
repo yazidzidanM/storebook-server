@@ -13,7 +13,7 @@ const options: swaggerJSDoc.Options = {
     },
     components: {
       securitySchemes: {
-        accessTokenAuth: {
+        bearerAuth: {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',

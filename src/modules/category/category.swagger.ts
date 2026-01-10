@@ -1,78 +1,52 @@
 /**
  * @swagger
  * tags:
- *   name: Book
- *   description: Book management (Admin only)
+ *   name: Category
+ *   description: Category management (Admin only)
  */
 
 /**
  * @swagger
  * components:
  *   schemas:
- *     BookInput:
+ *     CategoryInput:
  *       type: object
  *       required:
- *         - categoryId
- *         - title
- *         - author
- *         - description
- *         - price
- *         - stock
- *         - image
+ *         - name
  *       properties:
- *         categoryId:
- *           type: integer
- *           example: 1
- *         title:
+ *         name:
  *           type: string
- *           example: Clean Code
- *         author:
- *           type: string
- *           example: Robert C. Martin
+ *           example: Electronics
  *         description:
  *           type: string
- *           example: A Handbook of Agile Software Craftsmanship
- *         price:
- *           type: number
- *           format: decimal
- *           example: 199000.00
- *         stock:
- *           type: integer
- *           example: 10
- *         image:
- *           type: string
- *           example: https://example.com/images/clean-code.jpg
+ *           example: All electronic products
  *
- *     BookResponse:
+ *     CategoryResponse:
  *       type: object
  *       properties:
  *         id:
  *           type: integer
  *           example: 1
- *         categoryId:
- *           type: integer
- *           example: 1
- *         title:
+ *         name:
  *           type: string
- *         author:
- *           type: string
+ *           example: Electronics
  *         description:
  *           type: string
- *         price:
- *           type: number
- *           format: decimal
- *         stock:
- *           type: integer
- *         image:
+ *           example: All electronic products
+ *         createdAt:
  *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
  * @swagger
- * /api/books:
+ * /api/categories:
  *   post:
- *     summary: Create new book
- *     tags: [Book]
+ *     summary: Create new category
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -80,10 +54,10 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/BookInput'
+ *             $ref: '#/components/schemas/CategoryInput'
  *     responses:
  *       201:
- *         description: Book successfully created
+ *         description: Category successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -94,7 +68,7 @@
  *                 message:
  *                   type: string
  *                 data:
- *                   $ref: '#/components/schemas/BookResponse'
+ *                   $ref: '#/components/schemas/CategoryResponse'
  *       401:
  *         description: Unauthorized
  *       403:
@@ -105,15 +79,15 @@
 
 /**
  * @swagger
- * /api/books:
+ * /api/categories:
  *   get:
- *     summary: Get all books
- *     tags: [Book]
+ *     summary: Get all categories
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of books
+ *         description: List of categories
  *         content:
  *           application/json:
  *             schema:
@@ -126,7 +100,7 @@
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/BookResponse'
+ *                     $ref: '#/components/schemas/CategoryResponse'
  *       401:
  *         description: Unauthorized
  *       403:
@@ -137,10 +111,10 @@
 
 /**
  * @swagger
- * /api/books/{id}:
+ * /api/categories/{id}:
  *   get:
- *     summary: Get book by ID
- *     tags: [Book]
+ *     summary: Get category by ID
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -152,7 +126,7 @@
  *         example: 1
  *     responses:
  *       200:
- *         description: Book detail
+ *         description: Category detail
  *         content:
  *           application/json:
  *             schema:
@@ -163,9 +137,9 @@
  *                 message:
  *                   type: string
  *                 data:
- *                   $ref: '#/components/schemas/BookResponse'
+ *                   $ref: '#/components/schemas/CategoryResponse'
  *       404:
- *         description: Book not found
+ *         description: Category not found
  *       401:
  *         description: Unauthorized
  *       403:
@@ -176,10 +150,10 @@
 
 /**
  * @swagger
- * /api/books/{id}:
+ * /api/categories/{id}:
  *   put:
- *     summary: Update book by ID
- *     tags: [Book]
+ *     summary: Update category by ID
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -194,10 +168,10 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/BookInput'
+ *             $ref: '#/components/schemas/CategoryInput'
  *     responses:
  *       200:
- *         description: Book successfully updated
+ *         description: Category successfully updated
  *         content:
  *           application/json:
  *             schema:
@@ -208,9 +182,9 @@
  *                 message:
  *                   type: string
  *                 data:
- *                   $ref: '#/components/schemas/BookResponse'
+ *                   $ref: '#/components/schemas/CategoryResponse'
  *       404:
- *         description: Book not found
+ *         description: Category not found
  *       401:
  *         description: Unauthorized
  *       403:
@@ -221,10 +195,10 @@
 
 /**
  * @swagger
- * /api/books/{id}:
+ * /api/categories/{id}:
  *   delete:
- *     summary: Delete book by ID
- *     tags: [Book]
+ *     summary: Delete category by ID
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -236,7 +210,7 @@
  *         example: 1
  *     responses:
  *       200:
- *         description: Book successfully deleted
+ *         description: Category successfully deleted
  *         content:
  *           application/json:
  *             schema:
@@ -247,7 +221,7 @@
  *                 message:
  *                   type: string
  *       404:
- *         description: Book not found
+ *         description: Category not found
  *       401:
  *         description: Unauthorized
  *       403:
