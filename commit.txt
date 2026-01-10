@@ -1,0 +1,53 @@
+Berikut adalah daftar lengkap tentang jenis-jenis commit dan contoh penggunaannya:
+Jenis-jenis Commit
+
+    feat: Fitur baru
+
+    Contoh: feat(auth): menambahkan fitur login dengan OAuth
+
+    fix: Perbaikan bug atau kesalahan
+
+    Contoh: fix(navbar): memperbaiki bug pada navigasi
+
+    docs: Perubahan dokumentasi
+
+    Contoh: docs(api): memperbarui dokumentasi API untuk endpoint baru
+
+    style: Perubahan style atau format kode
+
+    Contoh: style(css): memperbaiki format CSS pada halaman utama
+
+    refactor: Perubahan struktur kode tanpa mengubah fungsionalitas
+
+    Contoh: refactor(utils): memperbaiki struktur kode utilitas
+
+    perf: Perubahan yang meningkatkan performa
+
+    Contoh: perf(db): meningkatkan kecepatan query database
+
+    test: Penambahan atau perubahan test
+
+    Contoh: test(api): menambahkan test untuk endpoint baru
+
+    build: Perubahan build atau konfigurasi project
+
+    Contoh: build(config): memperbarui konfigurasi project
+
+    ci: Perubahan continuous integration atau continuous deployment
+
+    Contoh: ci(circleci): memperbarui konfigurasi CircleCI
+
+    chore: Perubahan lain-lain yang tidak termasuk dalam kategori di atas
+
+    Contoh: chore(dependencies): memperbarui dependencies
+
+    revert: Mengembalikan perubahan yang telah dilakukan sebelumnya
+
+    Contoh: revert(feat(auth): membatalkan fitur login dengan OAuth
+
+Format Pesan Commit
+jenis(scope): deskripsi
+
+    jenis: jenis perubahan yang dilakukan (feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert)
+    scope: jangkauan atau area perubahan yang dilakukan (opsional)
+    deskripsi: deskripsi singkat tentang perubahan yang dilakukan
