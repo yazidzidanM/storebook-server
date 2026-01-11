@@ -18,10 +18,11 @@ export class UserRepository {
       username,
     };
   }
-  async getAllUsers() {
+  async getAllUsers(): Promise<IUser[]> {
     const result = await db.select().from(users);
     return result;
   }
+
   async findUserByUsername(username: string): Promise<IUser | undefined> {
     const result = await db
       .select()
