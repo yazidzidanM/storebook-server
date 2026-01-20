@@ -4,9 +4,9 @@ import pool from "#config/db"
 
 const startServer = async () => {
   try {
-    
     app.listen(env.PORT, () => {
       console.log(`🚀 Server running on port http://localhost:${env.PORT}`)
+      console.log(`swagger http://localhost:${env.PORT}/api-docs`)
     })
     pool
   } catch (err) {

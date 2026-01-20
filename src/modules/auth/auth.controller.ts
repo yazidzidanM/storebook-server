@@ -4,10 +4,14 @@ import catchAsync from "#shared/utils/catchAsync";
 import { sendResponse } from "#shared/utils/response";
 import { UserRepository } from "#modules/user/user.repository";
 import { AuthRepository } from "./auth.repository";
+import { CartRepository } from "#modules/cart/cart.repository";
+import { CartItemsRepository } from "#modules/cart_items/cart_items.repository";
 
 const AuthService = new AuthServices(
   new UserRepository(),
-  new AuthRepository()
+  new AuthRepository(),
+  new CartRepository(),
+  new CartItemsRepository()
 );
 
 export const register = catchAsync(
@@ -22,8 +26,9 @@ export const register = catchAsync(
       secure: process.env.NODE_ENV === "production", 
       sameSite: "strict", 
       maxAge: 7 * 24 * 60 * 60 * 1000, 
+      path: "/api/auth/refresh", 
     });
-    sendResponse(res, {user: result.user, access_token: result.accessToken}, "user successfully created", 201);
+    sendResponse(res, {user: result.user, cartId: result.cart_id, access_token: result.accessToken}, "user successfully created", 201);
   }
 );
 
@@ -31,15 +36,16 @@ export const login = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await AuthService.login(
       req.body.username,
-      req.body.password
+      req.body.password,
     );
     res.cookie("refreshToken", result.refreshToken, {
       httpOnly: true, 
       secure: process.env.NODE_ENV === "production", 
       sameSite: "strict", 
       maxAge: 7 * 24 * 60 * 60 * 1000, 
+      path: "/api/auth/refresh", 
     });
-    sendResponse(res, {user: result.user, access_token: result.accessToken}, "user successfully logged in", 200);
+    sendResponse(res, {user: result.user, cartId: result.cart_id, access_token: result.accessToken}, "user successfully logged in", 200);
   }
 );
 

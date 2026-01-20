@@ -1,5 +1,5 @@
 import { db } from "src/database/drizzle";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { books } from "./book.schema";
 import { IBook } from "./book.type.d";
 
@@ -11,7 +11,7 @@ export class bookRepository {
     description: string,
     price: string,
     stock: number,
-    image: string
+    image: string,
   ) {
     const result = await db.insert(books).values({
       categoryId,
@@ -35,6 +35,12 @@ export class bookRepository {
     return result[0];
   }
 
+  async getBooksByIds(ids: number[]) {
+    if (ids.length === 0) return [];
+
+    return await db.select().from(books).where(inArray(books.id, ids));
+  }
+
   async updateBookById(
     id: number,
     title: string,
@@ -43,7 +49,7 @@ export class bookRepository {
     description: string,
     price: string,
     stock: number,
-    image: string
+    image: string,
   ) {
     const result = await db
       .update(books)

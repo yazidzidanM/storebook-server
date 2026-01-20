@@ -83,8 +83,6 @@
  *   get:
  *     summary: Get all categories
  *     tags: [Category]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of categories

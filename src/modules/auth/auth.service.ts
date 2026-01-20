@@ -11,17 +11,20 @@ import {
 } from "#shared/helpers/jsonwebtoken";
 import * as userValidation from "#modules/user/user.validation";
 import { v4 as uuidv4 } from "uuid";
+import { CartRepository } from "#modules/cart/cart.repository";
+import { CartItemsRepository } from "#modules/cart_items/cart_items.repository";
 
 class AuthServices {
   constructor(
     private userRepo: UserRepository,
-    private authRepo: AuthRepository
+    private authRepo: AuthRepository,
+    private cartRepo: CartRepository,
+    private cartItemsRepo: CartItemsRepository 
   ) {
     this.userRepo = new UserRepository();
   }
-  
-  async registerUser(name: string, username: string, password: string) {
 
+  async registerUser(name: string, username: string, password: string) {
     const uuid = uuidv4();
 
     const validated = userValidation.registerSchema.validate({
@@ -30,12 +33,12 @@ class AuthServices {
       password,
     });
     if (!validated) throw new ExptectedError("validation failed", 400);
-    
+
     const existingUser = await this.userRepo.findUserByUsername(username);
     if (existingUser) throw new ExptectedError("Username already exists", 400);
-    
+
     const hashedPassword = await hashsingPassword(password);
-    
+
     const newUser = await this.userRepo.createUser(
       uuid,
       name,
@@ -43,7 +46,12 @@ class AuthServices {
       hashedPassword
     );
     if (!newUser) throw new ExptectedError("failed to create user", 400);
-
+    
+    const cart = await this.cartRepo.createCart(uuid)
+    console.log(cart)
+    if (!cart) throw new ExptectedError("failed to make cart", 400);
+    // const cart = await this.cartRepo.getCartIdByUuid(uuid)
+    
     const access_tokens = generateAccessToken({
       uuid,
       name,
@@ -64,13 +72,13 @@ class AuthServices {
 
     return {
       user: { uuid, name, username },
+      cart_id: cart[0].insertId,
       accessToken: access_tokens,
       refreshToken: refresh_tokens,
     };
   }
 
   async login(username: string, password: string) {
-
     const validated = userValidation.loginSchema.validate({
       username,
       password,
@@ -78,10 +86,17 @@ class AuthServices {
     if (!validated) throw new ExptectedError("validation failed", 400);
 
     const existingUser = await this.userRepo.findUserByUsername(username);
-    if (!existingUser) throw new ExptectedError("Invalid username or password", 401);
+    if (!existingUser)
+      throw new ExptectedError("Invalid username or password", 401);
 
     const isPasswordValid = verifyPassword(password, existingUser.password);
-    if (!isPasswordValid) throw new ExptectedError("Invalid username or password", 401);
+    if (!isPasswordValid)
+      throw new ExptectedError("Invalid username or password", 401);
+
+    const cart = await this.cartRepo.getCartIdByUuid(existingUser.uuid)
+    if(!cart) {
+      await this.cartRepo.createCart(existingUser.uuid)
+    }
 
     const access_tokens = generateAccessToken({
       uuid: existingUser.uuid,
@@ -90,7 +105,7 @@ class AuthServices {
       type: "access",
       role: existingUser.role,
     });
-    
+
     const refresh_tokens = generateRefreshToken({
       uuid: existingUser.uuid,
       name: existingUser.name,
@@ -99,33 +114,43 @@ class AuthServices {
       role: existingUser.role,
     });
 
-    await this.authRepo.deleteTokensByUserId(existingUser.uuid);
+    // await this.authRepo.deleteTokensByUserId(existingUser.uuid);
 
-    await this.authRepo.createCredentials(existingUser.uuid, refresh_tokens);
+    // await this.authRepo.createCredentials(existingUser.uuid, refresh_tokens);
 
     return {
-      user: { uuid: existingUser.uuid, name: existingUser.name, username },
+      user: {
+        uuid: existingUser.uuid,
+        name: existingUser.name,
+        username,
+        phone: existingUser.phone,
+        address: existingUser.address,
+        role: existingUser.role,
+      },
+      cart_id: cart.id,
       accessToken: access_tokens,
       refreshToken: refresh_tokens,
     };
   }
 
   async logout(token: string) {
-    if(!token) throw new ExptectedError("Unauthorized", 403);
+    if (!token) throw new ExptectedError("Unauthorized", 403);
 
     const decoded = verifyRefreshToken(token);
     if (!decoded) throw new ExptectedError("Invalid token", 401);
 
-    const existingToken = await this.authRepo.findTokensByUserUuid(decoded.uuid);
+    const existingToken = await this.authRepo.findTokensByUserUuid(
+      decoded.uuid
+    );
     if (!existingToken) throw new ExptectedError("User not found", 404);
 
     await this.authRepo.revokeTokenByUserUuid(decoded.uuid);
-    
+
     return;
   }
-  
+
   async refreshSession(token: any) {
-    if(!token) throw new ExptectedError("Unauthorized", 403);
+    if (!token) throw new ExptectedError("Unauthorized", 403);
 
     const decoded = verifyRefreshToken(token);
     if (!decoded) throw new ExptectedError("Invalid token", 401);

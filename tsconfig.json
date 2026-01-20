@@ -16,6 +16,8 @@
     "skipLibCheck": true,
     "allowJs": true,
 
+    "typeRoots": ["./src/@types", "./node_modules/@types"],
+
     "baseUrl": ".",
     "paths": {
       "#modules/*": ["src/modules/*"],

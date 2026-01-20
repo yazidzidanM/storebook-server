@@ -36,6 +36,7 @@ export const getBookById = catchAsync(
 
 export const updateBookById = catchAsync(
   async (req: any, res: any, next: any) => {
+    console.log(req.body)
     const result = await BookService.updateBookById(
       Number(req.params.id),
       req.body.title,

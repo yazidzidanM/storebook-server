@@ -109,8 +109,6 @@
  *   get:
  *     summary: Get all books
  *     tags: [Book]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of books

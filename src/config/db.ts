@@ -6,7 +6,7 @@ const pool = mysql2.createPool({
   user: dbConfig.user,
   password: dbConfig.password,
   database: dbConfig.database,
-  port: 3300
+  // port: 3300
 })
 
 pool.getConnection()

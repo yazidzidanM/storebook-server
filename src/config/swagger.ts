@@ -8,7 +8,7 @@ const options: swaggerJSDoc.Options = {
     openapi: "3.0.3",
     info: {
       title: "My Modular API",
-      version: "1.0.0",
+      version: "1.0.1",
       description: "API documentation for my modular monolith",
     },
     components: {

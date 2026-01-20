@@ -12,6 +12,8 @@ export class UserRepository {
         name,
         username,
         password,
+        phone: "",
+        address: "",
       })
     return {
       name,
@@ -44,14 +46,18 @@ export class UserRepository {
     userId: string,
     name: string,
     username: string,
-    role: "admin" | "user"
+    phone: string,
+    address: string,
+    // role: "admin" | "user"
   ) {
     const result = await db
       .update(users)
       .set({
         name,
         username,
-        role,
+        phone,
+        address,
+        // role,
       })
       .where(eq(users.uuid, userId));
     return result;

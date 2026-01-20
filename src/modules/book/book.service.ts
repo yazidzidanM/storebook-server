@@ -16,17 +16,21 @@ class BookServices {
     description: string,
     price: string,
     stock: number,
-    image: string
+    image: string,
   ) {
-    const validated = bookValidationSchema.validate({
-      title,
-      author,
-      categoryId,
-      description,
-      price,
-      stock,
-      image,
-    });
+    console.log(image);
+    const validated = bookValidationSchema.validate(
+      {
+        title,
+        author,
+        categoryId,
+        description,
+        price,
+        stock,
+        image,
+      },
+      { abortEarly: false },
+    );
     if (!validated) throw new ExptectedError("validation failed", 400);
 
     // await redis.del(bookCacheKey);
@@ -38,7 +42,7 @@ class BookServices {
       description,
       price,
       stock,
-      image
+      image,
     );
   }
 
@@ -65,18 +69,20 @@ class BookServices {
     description: string,
     price: string,
     stock: number,
-    image: string
+    image: string,
   ) {
-
-    const validated = bookValidationSchema.validate({
-      title,
-      author,
-      categoryId,
-      description,
-      price,
-      stock,
-      image,
-    });
+    const validated = bookValidationSchema.validate(
+      {
+        title,
+        author,
+        categoryId,
+        description,
+        price,
+        stock,
+        image,
+      },
+      { abortEarly: false },
+    );
     if (!validated) throw new ExptectedError("validation failed", 400);
 
     // await redis.del(bookCacheKey);
@@ -89,7 +95,7 @@ class BookServices {
       description,
       price,
       stock,
-      image
+      image,
     );
   }
 
